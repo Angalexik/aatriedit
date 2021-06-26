@@ -13,7 +13,7 @@
 	const fileType = titleMode ? 'nolb' : 'note';
 	const loremIpsum = `Lorem ipsum dolor sit amet,
 consectetur adipiscing elit,
-sed do eiusmod tempor incididunt`;
+sed do eiusmod tempor incididunt.`;
 
 	let json;
 
