@@ -17,6 +17,7 @@
 <style lang="scss">
 	$offset: 0.45em;
 	$description-offset: 1.2em;
+
 	.previewContainer {
 		$padding-right: 0.9em;
 		$padding-left: 0.78em;

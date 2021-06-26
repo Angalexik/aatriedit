@@ -10,7 +10,7 @@
 		if (items.length) {
 			activeTabValue = items[0].value;
 		}
-	})
+	});
 
 	const handleClick = (tabValue: number) => () => (activeTabValue = tabValue);
 </script>
