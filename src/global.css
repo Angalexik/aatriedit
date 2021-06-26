@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Open+Sans&display=swap');
+
+@font-face {
+	font-family: 'AATri';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./assets/AATriSerifCZ.otf');
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+main {
+	margin: 10px;
+}
+
+*:focus {
+	outline: none;
+}
