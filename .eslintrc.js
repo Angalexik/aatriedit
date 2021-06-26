@@ -51,5 +51,9 @@ module.exports = {
 			'warn',
 			'all'
 		],
+		'eqeqeq': [
+			'error',
+			'smart'
+		],
 	}
 };
