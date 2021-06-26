@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from './Button.svelte';
 	import { derived, writable } from 'svelte/store';
 	import { createEventDispatcher } from 'svelte';
 	import type { Readable, Writable } from 'svelte/store';
@@ -39,41 +40,17 @@
 		if (file !== undefined) {
 			bigboi.bytes = new Uint8Array(await file.arrayBuffer());
 			bigboi.text = await file.text();
+			filename = file.name;
 		}
 		return bigboi;
 	}
 </script>
 
 <input type="file" hidden bind:files={$fileList} bind:this={actualUpload}>
-<button class="uploadButton" class:uploaded="{uploaded === true}" on:click={() => actualUpload.click()}>{label}</button>
-
-<style>
-	button {
-		cursor: pointer;
-		
-		font-family: inherit;
-		font-size: 20px;
-		
-		border: none;
-		color: white;
-		background-color: #26aa5a;
-		
-		border-radius: 0.25rem;
-		
-		padding: 0.5rem 1rem;
-		
-		transition: background-color 0.15s ease-in-out;
-	}
-
-	button:hover {
-		background-color: #1f8c4b;
-	}
-
-	button.uploaded {
-		background-color: #cf2519;
-	}
-
-	button.uploaded:hover {
-		background-color: #9c1c13;
-	}
-</style>
+<Button
+	label={label}
+	backgroundColour={uploaded ? '#cf2519' : '#26aa5a'}
+	hoverBackgroundColour={uploaded ? '#9c1c13' : '#1f8c4b'}
+	on:click={() => { actualUpload.click(); }}
+/>
+<!-- <button class="uploadButton" class:uploaded="{uploaded === true}" on:click={() => actualUpload.click()}>{label}</button> -->
