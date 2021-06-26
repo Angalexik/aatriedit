@@ -1,12 +1,15 @@
 <script lang="ts">
 	import Button from './Button.svelte';
+
 	import { derived, writable } from 'svelte/store';
 	import { createEventDispatcher } from 'svelte';
+
 	import type { Readable, Writable } from 'svelte/store';
 	import type { fileData } from './types';
 
 	export let label: string;
 	export let uploaded = false;
+	export let filename: string | undefined;
 
 	const fileList: Writable<FileList> = writable(undefined);
 	let actualUpload: HTMLInputElement;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import EvidencePreview from './EvidencePreview.svelte';
 	import UploadButton from './UploadButton.svelte';
+	import DownloadButton from './DownloadButton.svelte';
 
 	// import type { Readable } from 'svelte/store';
 	import type { fileData } from './types';
@@ -8,6 +9,7 @@
 	export let titleMode: boolean = false;
 
 	let strings: string[] | undefined;
+	let filename: string | undefined;
 	const fileType = titleMode ? 'nolb' : 'note';
 	const loremIpsum = `Lorem ipsum dolor sit amet,
 consectetur adipiscing elit,
@@ -22,6 +24,11 @@ sed do eiusmod tempor incididunt`;
 		} else {
 			return undefined;
 		}
+	}
+
+	function arrayToString(strings: string[]): string {
+		const json: { id: number, text: string }[] = strings.map((x, i) => { return { id: i, text: x }; });
+		return JSON.stringify(json);
 	}
 
 	function removeExtraLines(strung: string, howMany: number): string {
@@ -45,9 +52,23 @@ sed do eiusmod tempor incididunt`;
 </script>
 
 <main>
-	<UploadButton label="Nahrát soubor „{fileType}“" bind:file={json} on:upload={handleUpload} />
+	<UploadButton
+		label="Nahrát soubor „{fileType}“"
+		bind:file={json}
+		bind:filename={filename}
+		on:upload={handleUpload}
+	/>
 
 	{#if strings !== undefined}
+		<div class="downloadButton">
+			<DownloadButton
+				label="Stáhnout soubor „{fileType}“"
+				mime="text/plain"
+				filename={filename}
+				data={arrayToString(strings)}
+			/>
+		</div>
+
 		{#each strings as string, i}
 			<div class="container">
 				<div class="centredContainer textareaContainer">
@@ -78,6 +99,11 @@ sed do eiusmod tempor incididunt`;
 </main>
 
 <style>
+	.downloadButton {
+		display: inline;
+		float: right;
+	}
+
 	.container {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -103,11 +129,11 @@ sed do eiusmod tempor incididunt`;
 	.description {
 		margin-top: 35px;
 		line-height: 1.45;
-		height: calc(2.8ex * 3);
+		height: calc(2.7ex * 3);
 	}
 
 	.title {
-		height: 2.2ex;
+		height: 2.1ex;
 	}
 
 	textarea {
