@@ -55,5 +55,6 @@ module.exports = {
 			'error',
 			'smart'
 		],
+		'no-debugger': 'off',
 	}
 };
