@@ -20,7 +20,7 @@
 
 <!-- Tab 2 -->
 <div class:hidden="{currentTab !== 1}">
-	<h3>Tab 2 Content</h3>
+	<Editor titleMode/>
 </div>
 
 <!-- Tab 3 -->

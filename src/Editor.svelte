@@ -5,11 +5,15 @@
 	// import type { Readable } from 'svelte/store';
 	import type { fileData } from './types';
 
-	let descriptions: string[] | undefined;
-	let titles: string[] | undefined;
+	export let titleMode: boolean = false;
 
-	let noteJson;
-	let nolbJson;
+	let strings: string[] | undefined;
+	const fileType = titleMode ? 'nolb' : 'note';
+	const loremIpsum = `Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt`;
+
+	let json;
 
 	function stringToArray(file: fileData | undefined): string[] | undefined {
 		if (file !== undefined && file.text !== undefined && file.bytes !== undefined) {
@@ -27,8 +31,7 @@
 	}
 
 	function handleUpload() {
-		descriptions = stringToArray($noteJson);
-		titles = stringToArray($nolbJson);
+		strings = stringToArray($json);
 	}
 	
 	function restrictTextarea(event: Event) {
@@ -36,27 +39,38 @@
 		const classes = element.className.split(' '); 
 		const type = classes[0];
 		const index = +classes[1];
-		if (type == 'title') {
-			titles[index] = removeExtraLines(titles[index], 1);
-		} else if (type == 'description') {
-			descriptions[index] = removeExtraLines(descriptions[index], 3);
-		}
+		const howMany = type === 'title' ? 1 : 3;
+		strings[index] = removeExtraLines(strings[index], howMany);
 	}
 </script>
 
 <main>
-	<UploadButton label="Nahrát soubor „.note“" bind:file={noteJson} on:upload={handleUpload} />
-	<UploadButton label="Nahrát soubor „.nolb“" bind:file={nolbJson} on:upload={handleUpload} />
+	<UploadButton label="Nahrát soubor „{fileType}“" bind:file={json} on:upload={handleUpload} />
 
-	{#if descriptions !== undefined && titles !== undefined}
-		{#each titles as title, i}
+	{#if strings !== undefined}
+		{#each strings as string, i}
 			<div class="container">
 				<div class="centredContainer textareaContainer">
-					<textarea cols="40" rows="1" class="title {i}" bind:value={titles[i]} on:input={restrictTextarea}></textarea>
-					<textarea cols="40" rows="3" class="description {i}" bind:value={descriptions[i]} on:input={restrictTextarea}></textarea>
+					{#if titleMode}
+						<textarea
+							cols="40"
+							rows="1"
+							class="title {i}"
+							bind:value={string}
+							on:input={restrictTextarea}
+						></textarea>
+					{:else}
+						<textarea
+							cols="40"
+							rows="3"
+							class="description {i}"
+							bind:value={string}
+							on:input={restrictTextarea}
+						></textarea>
+					{/if}
 				</div>
 				<div class="centredContainer previewContainer">
-					<EvidencePreview title={title} description={descriptions[i]} />
+					<EvidencePreview title={titleMode ? string : 'Placeholder'} description={titleMode ? loremIpsum : string} />
 				</div>
 			</div>
 		{/each}
