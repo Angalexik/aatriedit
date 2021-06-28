@@ -54,6 +54,7 @@ sed do eiusmod tempor incididunt.`;
 <main>
 	<UploadButton
 		label="Nahrát soubor „{fileType}“"
+		format={titleMode ? 'text' : 'lines'}
 		bind:file={json}
 		bind:filename={filename}
 		on:upload={handleUpload}
@@ -63,7 +64,7 @@ sed do eiusmod tempor incididunt.`;
 		<div class="downloadButton">
 			<DownloadButton
 				label="Stáhnout soubor „{fileType}“"
-				mime="text/plain"
+				mime="application/octet-stream"
 				filename={filename}
 				data={arrayToString(strings)}
 			/>

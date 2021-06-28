@@ -4,12 +4,15 @@
 	import { derived, writable } from 'svelte/store';
 	import { createEventDispatcher } from 'svelte';
 
+	import { fetchDecodeEncode } from './decode';
+
 	import type { Readable, Writable } from 'svelte/store';
 	import type { fileData } from './types';
 
 	export let label: string;
 	export let uploaded = false;
-	export let filename: string | undefined;
+	export let filename: string | undefined = undefined;
+	export let format: string;
 
 	const fileList: Writable<FileList> = writable(undefined);
 	let actualUpload: HTMLInputElement;
@@ -37,12 +40,20 @@
 
 	// $: file = uploadFile()
 
-	async function uploadFile(filelist: FileList): Promise<{ text: string | undefined, bytes: Uint8Array | undefined }> {
+	async function uploadFile(filelist: FileList): Promise<{
+		text: string | undefined,
+		bytes: Uint8Array | undefined
+	}> {
 		const file = filelist?.[0];
 		const bigboi = { text: undefined, bytes: undefined };
 		if (file !== undefined) {
-			bigboi.bytes = new Uint8Array(await file.arrayBuffer());
-			bigboi.text = await file.text();
+			const base64 = btoa(String.fromCharCode(...new Uint8Array(await file.arrayBuffer())));
+			const request = await fetchDecodeEncode(true, base64, format);
+			const json = await request.json();
+			bigboi.text = json.json;
+			bigboi.bytes = Uint8Array.from(json.json, (s: string) => s.charCodeAt(0));
+			// bigboi.bytes = new Uint8Array(await file.arrayBuffer());
+			// bigboi.text = await file.text();
 			filename = file.name;
 		}
 		return bigboi;

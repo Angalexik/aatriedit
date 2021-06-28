@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Button from './Button.svelte';
 
+	import { fetchDecodeEncode } from './decode';
+
 	export let label: string;
 	export let data: string;
 	export let mime: string;
@@ -8,8 +10,12 @@
 
 	let anchor: HTMLAnchorElement;
 
-	function download() {
-		const datastr = `data:${mime};charset=utf8,${encodeURIComponent(data)}`;
+	async function download() {
+		const request = await fetchDecodeEncode(false, data, 'text');
+		debugger;
+		const json = await request.json();
+		const base64 = json.base64;
+		const datastr = `data:${mime};charset=utf8;base64,${encodeURIComponent(base64)}`;
 		anchor.setAttribute('href', datastr);
 		anchor.setAttribute('download', filename);
 		anchor.click();
