@@ -63,8 +63,8 @@
 <input type="file" hidden bind:files={$fileList} bind:this={actualUpload}>
 <Button
 	label={label}
-	backgroundColour={uploaded ? '#cf2519' : '#26aa5a'}
-	hoverBackgroundColour={uploaded ? '#9c1c13' : '#1f8c4b'}
+	backgroundColour="#26aa5a"
+	hoverBackgroundColour="#1f8c4b"
 	on:click={() => { actualUpload.click(); }}
 />
 <!-- <button class="uploadButton" class:uploaded="{uploaded === true}" on:click={() => actualUpload.click()}>{label}</button> -->
