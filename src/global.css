@@ -18,3 +18,15 @@ main {
 *:focus {
 	outline: none;
 }
+
+.text {
+	background-image: url('./assets/textboxbg.png');
+	color: white;
+	line-height: 1.5;
+	padding: 1em 0 1em 0.5em;
+	width: 20em;
+	height: 4.5em;
+	border-radius: 0.25em;
+	white-space: pre;
+	margin: 0;
+}
