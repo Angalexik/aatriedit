@@ -7,6 +7,12 @@
 	src: url('./assets/AATriSerifCZ.otf');
 }
 
+html,
+body {
+	max-width: 100%;
+	overflow-x: none;
+}
+
 body {
 	font-family: 'Open Sans', sans-serif;
 }
