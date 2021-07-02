@@ -47,7 +47,8 @@
 		const file = filelist?.[0];
 		const bigboi = { text: undefined, bytes: undefined };
 		if (file !== undefined) {
-			const base64 = btoa(String.fromCharCode(...new Uint8Array(await file.arrayBuffer())));
+			// const base64 = btoa(String.fromCharCode(...new Uint8Array(await file.arrayBuffer())));
+			const base64 = btoa([].reduce.call(new Uint8Array(await file.arrayBuffer()), (p, c) => { return p + String.fromCharCode(c); }, ''));
 			const request = await fetchDecodeEncode(true, base64, format);
 			const json = await request.json();
 			bigboi.text = json.json;
