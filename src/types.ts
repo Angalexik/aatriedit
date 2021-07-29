@@ -23,6 +23,7 @@ export interface GSOperationToken {
 export interface GSStringToken {
 	'$type': 'GSMdtTools.GSStringToken, GSMdtTools',
 	Content: string,
+	Custom?: boolean,
 }
 
 export interface GSEndMessageToken {

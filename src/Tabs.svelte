@@ -18,7 +18,7 @@
 <ul>
 	{#each items as item}
 		<li class={activeTabValue === item.value ? 'active' : 'inactive'}>
-			<span on:click={handleClick(item.value)}>{item.label}</span>
+			<span on:click={handleClick(item.value)} role="button" aria-pressed={activeTabValue === item.value ? 'true' : 'false'}>{item.label}</span>
 		</li>
 	{/each}
 </ul>

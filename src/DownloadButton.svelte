@@ -7,12 +7,12 @@
 	export let data: string;
 	export let mime: string;
 	export let filename: string;
+	export let format: string;
 
 	let anchor: HTMLAnchorElement;
 
 	async function download() {
-		const request = await fetchDecodeEncode(false, data, 'text');
-		debugger;
+		const request = await fetchDecodeEncode(false, data, format);
 		const json = await request.json();
 		const base64 = json.base64;
 		const datastr = `data:${mime};charset=utf8;base64,${encodeURIComponent(base64)}`;

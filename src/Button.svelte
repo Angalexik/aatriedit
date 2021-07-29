@@ -20,24 +20,7 @@
 	on:mouseenter={() => { currentBackgroundColour = hoverBackgroundColour; }}
 	on:mouseleave={() => { currentBackgroundColour = backgroundColour; }}
 	on:click
+	{...$$restProps}
 >
 	{label}
 </button>
-
-<style>
-	button {
-		cursor: pointer;
-		
-		font-family: inherit;
-		font-size: 20px;
-		
-		border: none;
-		color: white;
-		
-		border-radius: 0.25rem;
-		
-		padding: 0.5rem 1rem;
-		
-		transition: background-color 0.15s ease-in-out;
-	}
-</style>

@@ -36,3 +36,56 @@ main {
 	white-space: pre;
 	margin: 0;
 }
+
+textarea {
+	resize: none;
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 20px;
+	border: 2px solid #dee2e6;
+	overflow: hidden;
+}
+
+textarea:focus {
+	border-color: lightblue;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	margin: 15px 0 15px 0;
+	grid-gap: 10vw;
+}
+
+.centredContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.previewContainer {
+	align-items: flex-start;
+}
+
+.textareaContainer {
+	align-items: flex-end;
+}
+
+.downloadButton {
+	display: inline;
+	float: right;
+}
+
+.optionContainer {
+	background-image: url('./assets/select_button.png');
+}
+
+button {
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 20px;
+	border: none;
+	border-radius: 0.25rem;
+	padding: 0.5rem 1rem;
+	transition: background-color 0.15s ease-in-out;
+}

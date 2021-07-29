@@ -2,15 +2,17 @@
 	import EvidencePreview from './EvidencePreview.svelte';
 	import UploadButton from './UploadButton.svelte';
 	import DownloadButton from './DownloadButton.svelte';
+	import ButtonPreview from './ButtonPreview.svelte';
 
 	// import type { Readable } from 'svelte/store';
 	import type { fileData } from './types';
 
 	export let titleMode: boolean = false;
+	export let buttonMode: boolean = false;
 
 	let strings: string[] | undefined;
 	let filename: string | undefined;
-	const fileType = titleMode ? 'nolb' : 'note';
+	const fileType = (titleMode || buttonMode) ? 'nolb' : 'note';
 	const loremIpsum = `Lorem ipsum dolor sit amet,
 consectetur adipiscing elit,
 sed do eiusmod tempor incididunt.`;
@@ -53,7 +55,7 @@ sed do eiusmod tempor incididunt.`;
 
 <main>
 	<UploadButton
-		label="Nahrát soubor „{fileType}“"
+		label="Nahrát soubor „{buttonMode ? 'ba, sel, .cho' : fileType}“"
 		format={titleMode ? 'text' : 'lines'}
 		bind:file={json}
 		bind:filename={filename}
@@ -63,17 +65,18 @@ sed do eiusmod tempor incididunt.`;
 	{#if strings !== undefined}
 		<div class="downloadButton">
 			<DownloadButton
-				label="Stáhnout soubor „{fileType}“"
+				label="Stáhnout soubor „{filename}“"
 				mime="application/octet-stream"
 				filename={filename}
 				data={arrayToString(strings)}
+				format='text'
 			/>
 		</div>
 
 		{#each strings as string, i}
 			<div class="container">
 				<div class="centredContainer textareaContainer">
-					{#if titleMode}
+					{#if titleMode || buttonMode}
 						<textarea
 							cols="40"
 							rows="1"
@@ -91,8 +94,13 @@ sed do eiusmod tempor incididunt.`;
 						></textarea>
 					{/if}
 				</div>
+				
 				<div class="centredContainer previewContainer">
-					<EvidencePreview title={titleMode ? string : 'Placeholder'} description={titleMode ? loremIpsum : string} />
+					{#if buttonMode}
+						<ButtonPreview text={string}/>
+					{:else}
+						<EvidencePreview title={titleMode ? string : 'Jméno'} description={titleMode ? loremIpsum : string} />
+					{/if}
 				</div>
 			</div>
 		{/each}
@@ -100,33 +108,6 @@ sed do eiusmod tempor incididunt.`;
 </main>
 
 <style>
-	.downloadButton {
-		display: inline;
-		float: right;
-	}
-
-	.container {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		margin: 12px 0 12px 0;
-		grid-gap: 10vw;
-	}
-
-	.centredContainer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.previewContainer {
-		align-items: flex-start;
-	}
-
-	.textareaContainer {
-		align-items: flex-end;
-	}
-
 	.description {
 		margin-top: 35px;
 		line-height: 1.45;
@@ -135,17 +116,5 @@ sed do eiusmod tempor incididunt.`;
 
 	.title {
 		height: 2.1ex;
-	}
-
-	textarea {
-		resize: none;
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 20px;
-		border: 2px solid #dee2e6;
-		overflow: hidden;
-	}
-
-	textarea:focus {
-		border-color: lightblue;
 	}
 </style>

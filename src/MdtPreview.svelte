@@ -1,29 +1,31 @@
 <script lang="ts">
-	export let name: string | null;
+	import { names } from './nameStore';
+
+	export let name: number;
 	export let text: string;
 </script>
 
-<div class="container">
+<div class="mdtContainer">
 	{#if name}
-		<p class="nameContainer"><span class="name">{name}</span></p>
+		<p class="nameContainer"><span class="name">{$names?.[name]?.[1] ?? `unknown (${name})`}</span></p>
 	{/if}
 	<p class="text">{text}</p>
 </div>
 
 <style>
-	.container {
-		margin: 20px;
-		font-size: 25px;
+	.mdtContainer {
+		font-size: 24px;
 		font-family: 'AATri', serif;
 		height: 7.26em;
+		position: relative;
 	}
 
 	.nameContainer {
 		font-size: 0.7em;
 		color: white;
 		margin: 0;
-		position: relative;
-		top: 0.7em;
+		position: absolute;
+		top: -0.5em;
 		left: 0.5rem;
 	}
 

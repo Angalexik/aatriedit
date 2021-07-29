@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as _ from 'lodash';
+	import { range } from 'lodash';
 	export let title: string;
 	export let description: string;
 </script>
@@ -8,7 +8,7 @@
 	<p class="title"><span>{title}</span></p>
 	<p class="description">{description}</p>
 	<div class="underlineContainer">
-		{#each _.range(3) as _i}
+		{#each range(3) as _}
 			<div class="underline"></div>
 		{/each}
 	</div>
@@ -22,6 +22,7 @@
 		$padding-right: 0.9em;
 		$padding-left: 0.78em;
 		$padding-top: 1.21em;
+
 		border: 2px solid lightblue;
 		font-family: 'AATri', serif;
 		font-size: 20px;
