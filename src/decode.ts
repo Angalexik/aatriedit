@@ -2,7 +2,7 @@ export function fetchDecodeEncode(decode: boolean, data: string, format: string)
 	const method = decode ? 'decode' : 'encode';
 	const body = decode ? { 'base64': data } : { 'json': data };
 
-	return fetch(`http://127.0.0.1:8079/api/${format}/${method}`, {
+	return fetch(`http://10.0.1.33:8079/api/${format}/${method}`, {
 		method: 'POST',
 		mode: 'cors',
 		body: JSON.stringify(body),
