@@ -4,7 +4,7 @@
 	import DownloadButton from './DownloadButton.svelte';
 	import ButtonPreview from './ButtonPreview.svelte';
 
-	// import type { Readable } from 'svelte/store';
+	import type { Readable } from 'svelte/store';
 	import type { fileData } from './types';
 
 	export let titleMode: boolean = false;
@@ -17,7 +17,7 @@
 consectetur adipiscing elit,
 sed do eiusmod tempor incididunt.`;
 
-	let json;
+	let json: Readable<fileData>;
 
 	function stringToArray(file: fileData | undefined): string[] | undefined {
 		if (file !== undefined && file.text !== undefined && file.bytes !== undefined) {

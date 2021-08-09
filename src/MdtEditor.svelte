@@ -9,6 +9,13 @@
 	import type { fileData, GSSomething } from './types';
 	import type { Readable } from 'svelte/store';
 
+	const COLOURS = [
+		'white',
+		'orange',
+		'blue',
+		'green',
+	];
+
 	let file: Readable<fileData>;
 	let filename: string | undefined;
 	let boxes: { ids: number[], preview: string, speaker: number }[] = [];
@@ -26,6 +33,8 @@
 	}
 
 	function updatePreview() {
+		let tagClosed = true;
+		let colour = 'white';
 		let index = 0;
 		let text = '';
 		json.forEach((operation) => {
@@ -40,14 +49,32 @@
 				case 0x01: // Newline
 					text += '\n';
 					break;
+				case 0x03: { // ChangeColour
+					colour = COLOURS[operation.Args[0]];
+					if (!tagClosed) {
+						text += '</span>';
+						tagClosed = true;
+					}
+					if (colour !== 'white') {
+						text += `<span class="${colour}">`;
+						tagClosed = false;
+					}
+					break;
+				}
 				case 0x02: // ReadKey
 				case 0x0A: // ReadKey
 				case 0x0D: // Exit
 				case 0x16: // NextScenario
 				case 0x2D: // ReadKey
 				case 0x2E: // ClearText
+					if (!tagClosed) {
+						text += '</span>';
+					}
 					boxes[index].preview = text.replace(/^\n+|\n+$/, '');
 					text = '';
+					if (!tagClosed) {
+						text += `<span class="${colour}">`;
+					}
 					++index;
 					break;
 				default:
@@ -61,6 +88,8 @@
 		let index = 0;
 		let text = '';
 		let speaker = 0;
+		let tagClosed = true;
+		let colour = 'white';
 		if (boxes[0] !== undefined) {
 			boxes.forEach((box) => {
 				box.ids = [];
@@ -84,15 +113,33 @@
 				case 0x01: // Newline
 					text += '\n';
 					break;
+				case 0x03: { // ChangeColour
+					colour = COLOURS[operation.Args[0]];
+					if (!tagClosed) {
+						text += '</span>';
+						tagClosed = true;
+					}
+					if (colour !== 'white') {
+						text += `<span class="${colour}">`;
+						tagClosed = false;
+					}
+					break;
+				}
 				case 0x02: // ReadKey
 				case 0x0A: // ReadKey
 				case 0x0D: // Exit
 				case 0x16: // NextScenario
 				case 0x2D: // ReadKey
 				case 0x2E: // ClearText
+					if (!tagClosed) {
+						text += '</span>';
+					}
 					boxes[index].preview = text.replace(/^\n+|\n+$/, '');
 					boxes[index].speaker = speaker;
 					text = '';
+					if (!tagClosed) {
+						text += `<span class="${colour}">`;
+					}
 					++index;
 					break;
 				case 0x0E: // SetSpeakerId
@@ -107,6 +154,7 @@
 
 	function handleUpload() {
 		json = stringToJson($file);
+		console.log(JSON.stringify(json));
 		updateBoxes();
 	}
 

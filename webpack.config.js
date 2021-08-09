@@ -7,7 +7,7 @@ const prod = mode === 'production';
 
 module.exports = {
 	entry: {
-		'bundle': ['./src/main.ts']
+		'bundle': ['./src/svelte.ts']
 	},
 	resolve: {
 		alias: {
@@ -66,6 +66,7 @@ module.exports = {
 			}
 		]
 	},
+	target: 'electron-renderer',
 	mode,
 	plugins: [
 		new MiniCssExtractPlugin({

@@ -51,3 +51,7 @@ export function isGSEndMessage(something: GSSomething): something is GSEndMessag
 export function isGSMessageCount(something: GSSomething): something is GSMessageCountToken {
 	return (something as GSMessageCountToken).MessageCount !== undefined;
 }
+
+declare global {
+	interface Window { electron: any }
+}

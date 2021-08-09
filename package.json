@@ -1,19 +1,34 @@
 {
-  "name": "svelte-app",
+  "name": "aatriedit",
   "version": "1.0.0",
+  "main": "src/index.js",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.59",
+    "@electron-forge/maker-deb": "^6.0.0-beta.59",
+    "@electron-forge/maker-flatpak": "^6.0.0-beta.59",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.59",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
+    "@electron-forge/maker-zip": "^6.0.0-beta.59",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.59",
     "@iconify/svelte": "^2.0.0-beta.1",
     "@tsconfig/svelte": "^1.0.10",
     "@types/lodash": "^4.14.170",
     "@types/node": "^14.11.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.28.0",
+    "@vercel/webpack-asset-relocator-loader": "^1.6.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.1",
+    "electron": "13.1.7",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.3.0",
+    "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^7.29.0",
     "eslint-plugin-svelte3": "^3.2.0",
+    "fork-ts-checker-webpack-plugin": "^6.3.1",
     "mini-css-extract-plugin": "^1.3.4",
     "sass": "^1.35.1",
+    "style-loader": "^3.2.1",
     "stylelint-config-standard": "^22.0.0",
     "svelte": "^3.31.2",
     "svelte-check": "^1.0.46",
@@ -22,21 +37,50 @@
     "ts-loader": "^8.0.4",
     "tslib": "^2.0.1",
     "typescript": "^4.0.3",
-    "webpack": "^5.16.0",
+    "webpack": "^5.48.0",
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^3.11.2"
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "my_new_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        }
+      ]
+    }
+  },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack serve --content-base public --host 0.0.0.0",
-    "validate": "svelte-check"
+    "start": "concurrently \"webpack --watch\" \"cross-env NODE_ENV=development electron-forge start\"",
+    "package": "npm run-script svelte-build && electron-forge package",
+    "make": "npm run-script svelte-build && electron-forge make",
+    "publish": "npm run-script svelte-build && electron-forge publish",
+    "lint": "svelte-check --tsconfig ./tsconfig.json",
+    "svelte-build": "cross-env NODE_ENV=production webpack",
+    "svelte-dev": "webpack serve --content-base public --host 0.0.0.0",
+    "svelte-validate": "svelte-check"
   },
   "dependencies": {
     "@iconify/iconify": "^2.0.3",
     "@jamescoyle/svelte-icon": "^0.1.1",
     "@jamescoyle/svg-icon": "^0.1.0",
     "@mdi/js": "^5.9.55",
+    "concurrently": "^6.2.0",
+    "electron-squirrel-startup": "^1.0.0",
     "lodash": "^4.17.21",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "zeromq": "^6.0.0-beta.6"
   }
 }

@@ -11,6 +11,7 @@ html,
 body {
 	max-width: 100%;
 	overflow-x: none;
+	background-color: white;
 }
 
 body {
@@ -88,4 +89,16 @@ button {
 	border-radius: 0.25rem;
 	padding: 0.5rem 1rem;
 	transition: background-color 0.15s ease-in-out;
+}
+
+.green {
+	color: #10e610;
+}
+
+.blue {
+	color: #75beeb;
+}
+
+.orange {
+	color: #ed0d19;
 }

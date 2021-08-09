@@ -1,4 +1,8 @@
 .DS_Store
 node_modules
-public
+public/bundle.*
+public/*.png
+public/*.otf
 package-lock.json
+.webpack
+dist

@@ -9,7 +9,7 @@
 	{#if name}
 		<p class="nameContainer"><span class="name">{$names?.[name]?.[1] ?? `unknown (${name})`}</span></p>
 	{/if}
-	<p class="text">{text}</p>
+	<p class="text">{@html text}</p>
 </div>
 
 <style>
