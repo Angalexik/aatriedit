@@ -6,3 +6,4 @@ public/*.otf
 package-lock.json
 .webpack
 dist
+out
