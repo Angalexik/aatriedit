@@ -56,6 +56,7 @@ const createWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
+	mainWindow.removeMenu()
 	// Open the DevTools.
 	if (mode === 'development') {
 		mainWindow.webContents.openDevTools();
