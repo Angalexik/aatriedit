@@ -2,6 +2,7 @@
   "name": "aatriedit",
   "version": "1.0.0",
   "main": "src/index.js",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
     "@electron-forge/maker-deb": "^6.0.0-beta.61",
